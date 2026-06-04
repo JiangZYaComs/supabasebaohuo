@@ -1,0 +1,16 @@
+name: Supabase Keep Alive
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase
+        run: |
+          echo "🔄 开始保活..."
+          curl -I -X GET "你的保活URL在这里" || echo "请求完成"
+          echo "✅ 保活请求结束"
