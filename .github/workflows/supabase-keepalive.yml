@@ -1,28 +1,28 @@
-名称: Supabase Keep Alive
+name: Supabase Keep Alive
 
 on:
   schedule:
     - cron: "17 */6 * * *"
   workflow_dispatch:
 
-职位:
+jobs:
   keep-alive:
-    运行于: ubuntu-latest
+    runs-on: ubuntu-latest
 
-    步骤:
-      - 名称: Ping Supabase
-        运行: |
+    steps:
+      - name: Ping Supabase
+        run: |
           set -euo pipefail
 
-          URL="https://vkgiosqveadbrrwtskgh.supabase.co/auth/v1/health"
+          SUPABASE_URL="https://vkgiosqveadbrrwtskgh.supabase.co"
 
           echo "开始访问 Supabase..."
           curl \
             --fail-with-body \
-            --静默
-            --显示错误 \
+            --silent \
+            --show-error \
             --max-time 30 \
-            "$URL"
+            "${SUPABASE_URL}/auth/v1/health"
 
-          回显
+          echo
           echo "Supabase 请求成功"
