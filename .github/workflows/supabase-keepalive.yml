@@ -10,9 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Ping Supabase
+      - name: Ping Supabase Auth
+        env:
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
           set -euo pipefail
+
+          test -n "${SUPABASE_ANON_KEY:-}" || {
+            echo "错误：GitHub Secret SUPABASE_ANON_KEY 未配置"
+            exit 1
+          }
 
           SUPABASE_URL="https://vkgiosqveadbrrwtskgh.supabase.co"
 
@@ -22,6 +29,8 @@ jobs:
             --silent \
             --show-error \
             --max-time 30 \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
             "${SUPABASE_URL}/auth/v1/health"
 
           echo
