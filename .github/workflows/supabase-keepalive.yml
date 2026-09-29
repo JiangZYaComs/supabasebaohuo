@@ -1,16 +1,28 @@
-name: Supabase Keep Alive
+名称: Supabase Keep Alive
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: "17 */6 * * *"
   workflow_dispatch:
 
-jobs:
+职位:
   keep-alive:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Ping Supabase
-        run: |
-          echo "🔄 开始保活..."
-          curl -I -X GET "你的保活URL在这里" || echo "请求完成"
-          echo "✅ 保活请求结束"
+    运行于: ubuntu-latest
+
+    步骤:
+      - 名称: Ping Supabase
+        运行: |
+          set -euo pipefail
+
+          URL="https://vkgiosqveadbrrwtskgh.supabase.co/auth/v1/health"
+
+          echo "开始访问 Supabase..."
+          curl \
+            --fail-with-body \
+            --静默
+            --显示错误 \
+            --max-time 30 \
+            "$URL"
+
+          回显
+          echo "Supabase 请求成功"
